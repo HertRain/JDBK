@@ -13,11 +13,13 @@ import android.support.v7.app.AppCompatActivity;
 
 public class SplashActivity extends AppCompatActivity {
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout .activity_splash) ;
+        mcountDownTimer.start() ;
+        SplashActivity.this.finish() ;
     }
-    CountDownTimer countDownTimer =new CountDownTimer(2000,1000) {
+    CountDownTimer mcountDownTimer =new CountDownTimer(2000,1000) {
         @Override
         public void onTick(long millisUntilFinished) {
 
@@ -25,7 +27,7 @@ public class SplashActivity extends AppCompatActivity {
 
         @Override
         public void onFinish() {
-            Intent intent=new Intent(SplashActivity .this,MainActivity .class);
+            Intent intent=new Intent(SplashActivity.this,MainActivity.class);
             startActivity(intent);
         }
     };
