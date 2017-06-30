@@ -1,8 +1,10 @@
-package com.example.administrator.jdbk;
+package com.example.administrator.jdbk.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+
+import com.example.administrator.jdbk.R;
 
 /**
  * Created by Admin on 2017/6/29.
