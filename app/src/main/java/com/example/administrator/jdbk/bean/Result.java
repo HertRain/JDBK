@@ -15,7 +15,7 @@ public class Result {
 
     private int error_code;
     private String reason;
-    private List<Subject> result;
+    private List<ExamInfo> result;
 
     public int getError_code() {
         return error_code;
@@ -33,12 +33,11 @@ public class Result {
         this.reason = reason;
     }
 
-    public List<Subject> getResult() {
+    public List<ExamInfo> getResult() {
         return result;
     }
 
-    public void setResult(List<Subject> result) {
+    public void setResult(List<ExamInfo> result) {
         this.result = result;
     }
-
 }
