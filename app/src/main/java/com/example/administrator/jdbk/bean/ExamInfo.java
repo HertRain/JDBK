@@ -4,7 +4,7 @@ package com.example.administrator.jdbk.bean;
  * Created by Admin on 2017/6/28.
  */
 
-public class Subject {
+public class ExamInfo {
     /**
      * subjectTitle : c1
      * uid : 1
