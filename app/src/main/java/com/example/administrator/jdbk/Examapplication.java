@@ -19,29 +19,20 @@ import java.util.List;
  */
 
 public class Examapplication extends Application {
+    public static String LOAD_EXAM_INFO="loan_exam_info";
+    public static String LOAD_EXAM_QUESTION="loan_exam_question";
+    public static String LOAD_DATA_SUCCESS="loan_data_success";
+    public static String LOAD_DATA_FAIL="loan_data_fail";
     ExamInfo examInfo ;
     List <Exam> mQuestion;
-    Exambiz biz;
+   //Exambiz biz;
     private static Examapplication instance;
     @Override
     public void onCreate() {
          super .onCreate() ;
         instance =this;
-        biz=new Exambiz();
-            initData();
     }
 
-    private void initData() {
-        //创建一个一个线程来加载数据
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-            biz.BeginExam() ;
-
-            }
-        }).start();
-
-    }
 
     public ExamInfo getExamInfo() {
         return examInfo;
