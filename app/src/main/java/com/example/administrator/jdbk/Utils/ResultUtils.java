@@ -2,7 +2,8 @@ package com.example.administrator.jdbk.Utils;
 
 import android.util.Log;
 
-import com.example.administrator.jdbk.bean.Question ;
+import com.example.administrator.jdbk.bean.Exam;
+import com.example.administrator.jdbk.bean.Result ;
 
 import com.google.gson.Gson;
 
@@ -37,10 +38,10 @@ public class ResultUtils {
             if(!jsonObject.isNull("result")) {
                 JSONArray array = jsonObject.getJSONArray("result");
                 if (array != null) {
-                    List<Question> list = new ArrayList<Question>();
+                    List<Exam> list = new ArrayList<Exam>();
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject jsonGroupAvatar = array.getJSONObject(i);
-                        Question ga = new Gson().fromJson(jsonGroupAvatar.toString(), Question.class);
+                        Exam ga = new Gson().fromJson(jsonGroupAvatar.toString(), Exam.class);
                         list.add(ga);
                     }
                     result.setResult(list);
@@ -49,10 +50,10 @@ public class ResultUtils {
             }else{
                 JSONArray array = new JSONArray(jsonStr);
                 if (array != null) {
-                    List<Question> list = new ArrayList<Question>();
+                    List<Exam> list = new ArrayList<Exam>();
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject jsonGroupAvatar = array.getJSONObject(i);
-                        Question ga = new Gson().fromJson(jsonGroupAvatar.toString(),Question.class);
+                        Exam ga = new Gson().fromJson(jsonGroupAvatar.toString(),Exam.class);
                         list.add(ga);
                     }
                     result.setResult(list);
