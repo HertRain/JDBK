@@ -4,7 +4,7 @@ package com.example.administrator.jdbk.bean;
  * Created by Admin on 2017/6/28.
  */
 
-public class Question {
+public class Exam {
     /**
      * id : 3
      * question : 这个标志是何含义？
