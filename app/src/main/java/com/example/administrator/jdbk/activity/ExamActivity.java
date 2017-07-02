@@ -11,6 +11,8 @@ import com.example.administrator.jdbk.Examapplication;
 import com.example.administrator.jdbk.R;
 import com.example.administrator.jdbk.bean.Exam;
 import com.example.administrator.jdbk.bean.ExamInfo;
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 /**
@@ -60,6 +62,7 @@ public class ExamActivity extends AppCompatActivity {
             tvop2 .setText(exam.getItem2()) ;
             tvop3 .setText(exam.getItem3()) ;
             tvop4 .setText(exam.getItem4()) ;
+            Picasso .with(ExamActivity .this).load(exam .getUrl()) .into(Image);
         }
     }
 
