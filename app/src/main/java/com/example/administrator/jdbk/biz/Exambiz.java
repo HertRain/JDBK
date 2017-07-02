@@ -10,7 +10,7 @@ public class Exambiz implements IExamBiz  {
     ExamDao dao;
 
     public Exambiz() {
-        this.dao = dao;
+        this.dao = new ExamDao();
     }
 
     @Override
