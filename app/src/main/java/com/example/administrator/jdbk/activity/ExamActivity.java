@@ -9,7 +9,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.ListMenuItemView;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.administrator.jdbk.Examapplication;
@@ -28,11 +30,15 @@ import java.util.List;
  */
 
 public class ExamActivity extends AppCompatActivity {
-    TextView textView,tvExamTitle,tvop1,tvop2,tvop3,tvop4;
+    TextView textView,tvExamTitle,tvop1,tvop2,tvop3,tvop4,tvload;
     ImageView Image;
     IExamBiz biz;
+    LinearLayout LayoutLoading;
+
     boolean isLoadExamInfo=false ;
     boolean isLoadQuestion=false ;
+    boolean isLoadExamInfoReceiver=false ;
+    boolean isLoadQuestionReceiver=false ;
     LoadExamBroadcast loadExamBroadcast;
     LoadQuestionBroadcast loadQuestionBroadcast ;
     @Override
@@ -84,23 +90,33 @@ public class ExamActivity extends AppCompatActivity {
         tvop3 =(TextView) findViewById(R.id.tv_exam_op3);
         tvop4 =(TextView) findViewById(R.id.tv_exam_op4);
         Image =(ImageView) findViewById(R.id.Iv_exam_image);
+        LayoutLoading =(LinearLayout) findViewById(R.id.Layout_loading);
+        tvload=(TextView) findViewById(R.id.tv_load);
 
     }
 
     private void initData() {
-      //  if(isLoadExamInfo &&isLoadQuestion )
-      //  {
-            ExamInfo examinfo = Examapplication.getInstance().getExamInfo();
-            Log.e("examinfo","examinfo = "+examinfo);
-            if (examinfo != null) {
-                showData(examinfo);
+        if(isLoadQuestionReceiver &&isLoadExamInfoReceiver )
+        {       if(isLoadExamInfo &&isLoadQuestion )
+                {
+                    LayoutLoading.setVisibility(View.GONE) ;
+                    ExamInfo examinfo = Examapplication.getInstance().getExamInfo();
+                    Log.e("examinfo","examinfo = "+examinfo);
+                    if (examinfo != null) {
+                        showData(examinfo);
+                    }
+                    List<Exam> list = Examapplication.getInstance().getmQuestion();
+                    Log.e("list","list = "+list);
+                    if (list != null) {
+                        showExam(list);
+                    }
+                }
+            else
+            {
+                tvload .setText("加载数据失败，点击重新加载") ;
             }
-            List<Exam> list = Examapplication.getInstance().getmQuestion();
-            Log.e("list","list = "+list);
-            if (list != null) {
-                showExam(list);
-            }
-      //  }
+        }
+
     }
 
     private void showExam(List<Exam> list) {
@@ -132,6 +148,7 @@ public class ExamActivity extends AppCompatActivity {
             {
                 isLoadExamInfo =true ;
             }
+            isLoadExamInfoReceiver =true;
             initData() ;
         }
     }
@@ -146,6 +163,7 @@ public class ExamActivity extends AppCompatActivity {
             {
                 isLoadQuestion  =true ;
             }
+            isLoadQuestionReceiver =true;
             initData() ;
         }
     }
