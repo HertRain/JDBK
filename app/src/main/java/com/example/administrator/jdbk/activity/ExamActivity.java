@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.ListMenuItemView;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -32,9 +33,10 @@ import java.util.List;
 
 public class ExamActivity extends AppCompatActivity {
     TextView textView,tvExamTitle,tvop1,tvop2,tvop3,tvop4,tvload,tvExamNo;
+    CheckBox cb1,cb2,cb3,cb4;
     ImageView Image;
     IExamBiz biz;
-    LinearLayout LayoutLoading;
+    LinearLayout LayoutLoading,Layout03,Layout04;
     ProgressBar dialog;
 
     boolean isLoadExamInfo=false ;
@@ -95,7 +97,13 @@ public class ExamActivity extends AppCompatActivity {
         tvop3 =(TextView) findViewById(R.id.tv_exam_op3);
         tvop4 =(TextView) findViewById(R.id.tv_exam_op4);
         Image =(ImageView) findViewById(R.id.Iv_exam_image);
+        cb1=(CheckBox)  findViewById(R.id.cb_01);
+        cb2=(CheckBox)  findViewById(R.id.cb_02);
+        cb3=(CheckBox)  findViewById(R.id.cb_03);
+        cb4=(CheckBox)  findViewById(R.id.cb_04);
         LayoutLoading =(LinearLayout) findViewById(R.id.Layout_loading);
+        Layout03 =(LinearLayout) findViewById(R.id.Layout_03);
+        Layout04 =(LinearLayout) findViewById(R.id.Layout_04);
         tvload=(TextView) findViewById(R.id.tv_load);
         dialog =(ProgressBar) findViewById(R.id.Load_dialog);
         tvExamNo =(TextView)  findViewById(R.id.tv_exam_no);
@@ -142,6 +150,10 @@ public class ExamActivity extends AppCompatActivity {
             tvop2 .setText(exam.getItem2()) ;
             tvop3 .setText(exam.getItem3()) ;
             tvop4 .setText(exam.getItem4()) ;
+            Layout03.setVisibility(exam.getItem3() .equals("")?View.GONE:View.VISIBLE);
+            cb3.setVisibility(exam.getItem3() .equals("")?View.GONE:View.VISIBLE);
+            Layout04.setVisibility(exam.getItem4() .equals("")?View.GONE:View.VISIBLE);
+            cb4.setVisibility(exam.getItem3() .equals("")?View.GONE:View.VISIBLE);
             if(exam .getUrl()!=null&& !exam .getUrl() .equals("") ){
                 Image .setVisibility(View.VISIBLE) ;
             Picasso .with(ExamActivity .this)
