@@ -30,7 +30,7 @@ import java.util.List;
 public class ExamActivity extends AppCompatActivity {
     TextView textView,tvExamTitle,tvop1,tvop2,tvop3,tvop4;
     ImageView Image;
-    Exambiz biz;
+    IExamBiz biz;
     boolean isLoadExamInfo=false ;
     boolean isLoadQuestion=false ;
     LoadExamBroadcast loadExamBroadcast;
@@ -39,14 +39,18 @@ public class ExamActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout .activity_randomtest);
+        loadQuestionBroadcast =new LoadQuestionBroadcast();
+        loadExamBroadcast = new LoadExamBroadcast();
         estListener();
         initView();
         LoadData();
     }
     //注册
     private void estListener() {
+
         registerReceiver(loadExamBroadcast ,new IntentFilter(Examapplication .LOAD_EXAM_INFO ) ) ;
         registerReceiver(loadQuestionBroadcast,new IntentFilter(Examapplication .LOAD_EXAM_QUESTION) ) ;
+
     }
 
     @Override
@@ -68,7 +72,6 @@ public class ExamActivity extends AppCompatActivity {
             @Override
             public void run() {
                 biz.BeginExam() ;
-
             }
         }).start();
     }
@@ -85,17 +88,19 @@ public class ExamActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        if(isLoadExamInfo &&isLoadQuestion )
-        {
+      //  if(isLoadExamInfo &&isLoadQuestion )
+      //  {
             ExamInfo examinfo = Examapplication.getInstance().getExamInfo();
+            Log.e("examinfo","examinfo = "+examinfo);
             if (examinfo != null) {
                 showData(examinfo);
             }
             List<Exam> list = Examapplication.getInstance().getmQuestion();
+            Log.e("list","list = "+list);
             if (list != null) {
                 showExam(list);
             }
-        }
+      //  }
     }
 
     private void showExam(List<Exam> list) {
@@ -113,11 +118,14 @@ public class ExamActivity extends AppCompatActivity {
     private void showData(ExamInfo examinfo) {
         textView .setText(examinfo .toString()) ;
     }
+
+
     class LoadExamBroadcast extends BroadcastReceiver
     {
 
         @Override
         public void onReceive(Context context, Intent intent) {
+            Log.e("LoadExamBroadcast","LoadExamBroadcast-onReceive is ok");
             boolean isSuccess=intent.getBooleanExtra(Examapplication .LOAD_DATA_SUCCESS ,false) ;
             Log.e("LoadExamBroadcast="+loadExamBroadcast  ,"isSuccess="+isSuccess);
             if(isSuccess)

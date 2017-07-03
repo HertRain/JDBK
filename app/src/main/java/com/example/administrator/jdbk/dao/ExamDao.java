@@ -66,6 +66,7 @@ public class ExamDao implements  IExamDao {
                                success =true ;
                             }
                         }
+                       Log.e("main","jsonStr is ok");
                         Examapplication .getInstance()
                                 .sendBroadcast(new Intent(Examapplication.LOAD_EXAM_QUESTION )
                                         .putExtra(Examapplication.LOAD_DATA_SUCCESS,success) );

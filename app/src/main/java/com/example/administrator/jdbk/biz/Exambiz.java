@@ -1,13 +1,14 @@
 package com.example.administrator.jdbk.biz;
 
 import com.example.administrator.jdbk.dao.ExamDao;
+import com.example.administrator.jdbk.dao.IExamDao;
 
 /**
  * Created by Admin on 2017/7/2.
  */
 
 public class Exambiz implements IExamBiz  {
-    ExamDao dao;
+    IExamDao dao;
 
     public Exambiz() {
         this.dao = new ExamDao();
