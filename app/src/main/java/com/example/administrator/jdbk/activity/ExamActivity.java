@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.administrator.jdbk.Examapplication;
@@ -30,15 +31,17 @@ import java.util.List;
  */
 
 public class ExamActivity extends AppCompatActivity {
-    TextView textView,tvExamTitle,tvop1,tvop2,tvop3,tvop4,tvload;
+    TextView textView,tvExamTitle,tvop1,tvop2,tvop3,tvop4,tvload,tvExamNo;
     ImageView Image;
     IExamBiz biz;
     LinearLayout LayoutLoading;
+    ProgressBar dialog;
 
     boolean isLoadExamInfo=false ;
     boolean isLoadQuestion=false ;
     boolean isLoadExamInfoReceiver=false ;
     boolean isLoadQuestionReceiver=false ;
+
     LoadExamBroadcast loadExamBroadcast;
     LoadQuestionBroadcast loadQuestionBroadcast ;
     @Override
@@ -47,6 +50,7 @@ public class ExamActivity extends AppCompatActivity {
         setContentView(R.layout .activity_randomtest);
         loadQuestionBroadcast =new LoadQuestionBroadcast();
         loadExamBroadcast = new LoadExamBroadcast();
+        biz=new Exambiz() ;
         estListener();
         initView();
         LoadData();
@@ -72,8 +76,9 @@ public class ExamActivity extends AppCompatActivity {
     }
 
     private void LoadData() {
-
-        biz=new Exambiz() ;
+        dialog .setVisibility(View.VISIBLE) ;
+        tvload .setText("加载数据中...") ;
+        LayoutLoading .setEnabled(false) ;
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -92,7 +97,14 @@ public class ExamActivity extends AppCompatActivity {
         Image =(ImageView) findViewById(R.id.Iv_exam_image);
         LayoutLoading =(LinearLayout) findViewById(R.id.Layout_loading);
         tvload=(TextView) findViewById(R.id.tv_load);
-
+        dialog =(ProgressBar) findViewById(R.id.Load_dialog);
+        tvExamNo =(TextView)  findViewById(R.id.tv_exam_no);
+        LayoutLoading .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoadData() ;
+            }
+        }) ;
     }
 
     private void initData() {
@@ -108,31 +120,49 @@ public class ExamActivity extends AppCompatActivity {
                     List<Exam> list = Examapplication.getInstance().getmQuestion();
                     Log.e("list","list = "+list);
                     if (list != null) {
-                        showExam(list);
+                       showExam(biz.getExam());
                     }
                 }
-            else
-            {
-                tvload .setText("加载数据失败，点击重新加载") ;
-            }
+                else
+                {
+                    LayoutLoading .setEnabled(true) ;
+                    dialog .setVisibility(View.GONE) ;
+                    tvload .setText("加载数据失败，点击重新加载") ;
+                }
         }
 
     }
 
-    private void showExam(List<Exam> list) {
-        Exam exam=list.get(0);
+    private void showExam(Exam exam) {
+        Log.e("showExam","showExam,exam="+exam);
         if(exam!=null){
+            tvExamNo .setText(biz.getIndex()) ;
             tvExamTitle.setText(exam .getQuestion() ) ;
             tvop1 .setText(exam.getItem1()) ;
             tvop2 .setText(exam.getItem2()) ;
             tvop3 .setText(exam.getItem3()) ;
             tvop4 .setText(exam.getItem4()) ;
-            Picasso .with(ExamActivity .this).load(exam .getUrl()) .into(Image);
+            if(exam .getUrl()!=null&& !exam .getUrl() .equals("") ){
+                Image .setVisibility(View.VISIBLE) ;
+            Picasso .with(ExamActivity .this)
+                    .load(exam .getUrl()) .into(Image);
+            }
+            else {
+                Image .setVisibility(View.GONE) ;
+            }
         }
     }
 
     private void showData(ExamInfo examinfo) {
         textView .setText(examinfo .toString()) ;
+    }
+
+    public void preExam(View view) {
+        showExam(biz .PreQuestion()) ;
+    }
+
+    public void nextExam(View view) {
+        showExam(biz.NextQuestion()) ;
     }
 
 

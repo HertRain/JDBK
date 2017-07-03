@@ -5,6 +5,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:background="@drawable/main">
+    <LinearLayout
+        android:id="@+id/Layout_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_gravity="center" >
+        <ProgressBar
+            android:id="@+id/Load_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_load"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="加载数据中..."
+            android:textColor="#000"
+            android:textSize="18sp"
+            />
+    </LinearLayout>
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,6 +54,7 @@
         android:orientation="horizontal"
         android:layout_margin="10dp">
         <TextView
+            android:id="@+id/tv_exam_no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1."
@@ -169,6 +190,7 @@
         android:drawableLeft="@drawable/exam_pre32x32"
         android:background="@null"
         android:text="上一题"
+        android:onClick="preExam"
         android:layout_alignParentLeft="true"/>
     <Button
         android:id="@+id/btn_next"
@@ -176,6 +198,7 @@
         android:layout_height="wrap_content"
         android:drawableRight="@drawable/exam_next32x32"
         android:background="@null"
+        android:onClick="nextExam"
         android:text="下一题"
         android:layout_alignParentRight="true"/>
     <Button

@@ -22,7 +22,7 @@ public class Examapplication extends Application {
     public static String LOAD_EXAM_INFO="loan_exam_info";
     public static String LOAD_EXAM_QUESTION="loan_exam_question";
     public static String LOAD_DATA_SUCCESS="loan_data_success";
-    public static String LOAD_DATA_FAIL="loan_data_fail";
+
     ExamInfo examInfo ;
     List <Exam> mQuestion;
    //Exambiz biz;
