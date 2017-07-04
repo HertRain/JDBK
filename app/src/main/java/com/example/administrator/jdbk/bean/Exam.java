@@ -120,6 +120,7 @@ public class Exam {
                 ", item4='" + item4 + '\'' +
                 ", explains='" + explains + '\'' +
                 ", url='" + url + '\'' +
+                ", useranswer='" + useranswer + '\'' +
                 '}';
     }
 }

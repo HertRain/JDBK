@@ -205,12 +205,26 @@ public class ExamActivity extends AppCompatActivity {
                 Image .setVisibility(View.GONE) ;
             }
             resetOptions();
+            String  UserAnswer=exam .getUseranswer() ;
+            //设置显示考生答案
+            if(UserAnswer !=null&&!UserAnswer .equals(""))
+            {
+                int cb=Integer .parseInt(UserAnswer);
+                cbs[cb].setChecked(true) ;
+            }
         }
     }
-
+    //重置选项
     private void resetOptions() {
         for(CheckBox cb:cbs){
             cb.setChecked(false) ;
+        }
+    }
+    //保存考生答案
+    private void saveUseranswer(){
+
+        for(int i=0;i<cbs.length ;i++){
+            biz.getExam() .setUseranswer(String.valueOf(i+1)) ;
         }
     }
 
@@ -219,10 +233,12 @@ public class ExamActivity extends AppCompatActivity {
     }
 
     public void preExam(View view) {
+        saveUseranswer() ;
         showExam(biz .PreQuestion()) ;
     }
 
     public void nextExam(View view) {
+        saveUseranswer() ;
         showExam(biz.NextQuestion()) ;
     }
 
