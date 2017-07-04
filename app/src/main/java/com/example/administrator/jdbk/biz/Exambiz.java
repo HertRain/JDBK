@@ -42,7 +42,7 @@ public class Exambiz implements IExamBiz  {
     public Exam  NextQuestion() {
         if(examList !=null&& examIndex<examList.size()-1 ){
             examIndex++;
-            return examList.get(examIndex+1);
+            return examList.get(examIndex);
         }
         else{
             return null;
@@ -53,7 +53,7 @@ public class Exambiz implements IExamBiz  {
     public Exam PreQuestion() {
         if(examList !=null&& examIndex>0){
             examIndex--;
-            return examList.get(examIndex+1);
+            return examList.get(examIndex);
         }
         else{
             return null;

@@ -207,12 +207,16 @@ public class ExamActivity extends AppCompatActivity {
                 Image .setVisibility(View.GONE) ;
             }
             resetOptions();
-            String  UserAnswer=exam .getUseranswer() ;
+
+            String  UserAnswer=exam.getUseranswer() ;
+            Log.e("Integer","cb="+UserAnswer);
             //设置显示考生答案
-            if(UserAnswer !=null&&!UserAnswer .equals(""))
+            if(UserAnswer!=null&&!UserAnswer.equals(""))
             {
-                int cb=Integer .parseInt(UserAnswer);
-                cbs[cb].setChecked(true) ;
+
+                int usercb=Integer .parseInt(UserAnswer)-1;
+                Log.e("Integer","cb="+usercb);
+                cbs[usercb].setChecked(true) ;
             }
         }
     }
@@ -225,9 +229,15 @@ public class ExamActivity extends AppCompatActivity {
     //保存考生答案
     private void saveUseranswer(){
 
-        for(int i=0;i<cbs.length ;i++){
-            biz.getExam() .setUseranswer(String.valueOf(i+1)) ;
+        for(int i=0;i<cbs.length ;i++)
+        {
+            if(cbs[i].isChecked()){
+                Log.e("Integer", "cb=" + String.valueOf(i + 1));
+                biz.getExam().setUseranswer(String.valueOf(i + 1));
+                return ;
+            }
         }
+
     }
 
     private void showData(ExamInfo examinfo) {
@@ -235,6 +245,7 @@ public class ExamActivity extends AppCompatActivity {
     }
 
     public void preExam(View view) {
+
         saveUseranswer() ;
         showExam(biz .PreQuestion()) ;
     }
@@ -246,10 +257,10 @@ public class ExamActivity extends AppCompatActivity {
 //交卷
     public void commit(View view) {
         saveUseranswer() ;
-
         int s=biz.CommitExam() ;
         View inflate=View.inflate(this,R.layout.layout_result,null);
         TextView tvResult=(TextView)  inflate.findViewById(R.id .tv_result);
+        tvResult .setText("你的分数为:"+s+"分") ;
         AlertDialog .Builder builder=new AlertDialog.Builder(this) ;
         builder .setIcon(R.drawable .exam_commit32x32)
                 .setTitle("考试结果")
@@ -262,7 +273,6 @@ public class ExamActivity extends AppCompatActivity {
                     }
                 }) ;
         builder .create() .show();
-
     }
 
 
