@@ -29,13 +29,15 @@ import com.example.administrator.jdbk.biz.IExamBiz ;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by Admin on 2017/6/29.
  */
 
 public class ExamActivity extends AppCompatActivity {
-    TextView textView,tvExamTitle,tvop1,tvop2,tvop3,tvop4,tvload,tvExamNo;
+    TextView textView,tvExamTitle,tvop1,tvop2,tvop3,tvop4,tvload,tvExamNo,tvTime;
     CheckBox cb1,cb2,cb3,cb4;
     CheckBox[] cbs=new CheckBox[4];
     ImageView Image;
@@ -100,6 +102,7 @@ public class ExamActivity extends AppCompatActivity {
         tvop2 =(TextView) findViewById(R.id.tv_exam_op2);
         tvop3 =(TextView) findViewById(R.id.tv_exam_op3);
         tvop4 =(TextView) findViewById(R.id.tv_exam_op4);
+        tvTime  =(TextView) findViewById(R.id.tv_time);
         Image =(ImageView) findViewById(R.id.Iv_exam_image);
 
         cb1=(CheckBox)  findViewById(R.id.cb_01);
@@ -168,6 +171,7 @@ public class ExamActivity extends AppCompatActivity {
                     Log.e("examinfo","examinfo = "+examinfo);
                     if (examinfo != null) {
                         showData(examinfo);
+                        InitTimer(examinfo);
                     }
                     List<Exam> list = Examapplication.getInstance().getmQuestion();
                     Log.e("list","list = "+list);
@@ -184,6 +188,41 @@ public class ExamActivity extends AppCompatActivity {
         }
 
     }
+    //加载剩余考试时间
+    private void InitTimer(ExamInfo examinfo) {
+        int  sumTime=examinfo.getLimitTime()*60*1000;
+        final long overTime=(long) (System.currentTimeMillis()+sumTime);
+        final Timer timer=new Timer() ;
+        //设置计时器
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+            long l=overTime -System.currentTimeMillis() ;
+            final long min=(long) (l/1000/60);
+            final long sec=(long) l/1000%60;
+            runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                            tvTime .setText("剩余时间"+min+""+sec+"秒") ;
+                        }
+                    });
+            }
+        },0,1000) ;
+        //注销计时器，并提交试题
+       timer .schedule(new TimerTask() {
+           @Override
+           public void run() {
+               timer .cancel() ;
+               runOnUiThread(new Runnable() {
+                   @Override
+                   public void run() {
+                       commit(null) ;
+                   }
+               }) ;
+           }
+       },sumTime);
+    }
+
 
     private void showExam(Exam exam) {
         Log.e("showExam","showExam,exam="+exam);
