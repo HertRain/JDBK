@@ -41,6 +41,14 @@
         android:layout_marginTop="10dp"
         android:textColor="#000"
         tools:text="@string/exam_name" />
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="剩余时间：9分53秒"
+        android:textColor="#000"
+        android:gravity="center_horizontal"
+        />
 
     <View
         android:layout_width="match_parent"
@@ -187,6 +195,10 @@
             android:text="D"
             android:layout_marginLeft="20dp"/>
     </LinearLayout>
+    <Gallery
+        android:id="@+id/gallery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -120,6 +121,7 @@ public class ExamActivity extends AppCompatActivity {
         tvload=(TextView) findViewById(R.id.tv_load);
         dialog =(ProgressBar) findViewById(R.id.Load_dialog);
         tvExamNo =(TextView)  findViewById(R.id.tv_exam_no);
+        Gallery gallery=(Gallery)  findViewById(R.id.gallery);
         LayoutLoading .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,6 +165,7 @@ public class ExamActivity extends AppCompatActivity {
         }
     };
     private void initData() {
+
         if(isLoadQuestionReceiver &&isLoadExamInfoReceiver )
         {       if(isLoadExamInfo &&isLoadQuestion )
                 {
