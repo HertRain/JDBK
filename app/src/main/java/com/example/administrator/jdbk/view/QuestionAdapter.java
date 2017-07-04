@@ -47,6 +47,6 @@ public class QuestionAdapter extends BaseAdapter {
         TextView tvNo=(TextView) view.findViewById(R.id.tv_no) ;
         ImageView ivQuestion=(ImageView) view.findViewById(R.id.iv_question) ;
         tvNo .setText("第"+(position+1)+"题") ;
-        return null;
+        return view;
     }
 }

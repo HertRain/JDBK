@@ -27,6 +27,7 @@ import com.example.administrator.jdbk.bean.ExamInfo;
 import com.example.administrator.jdbk.biz.Exambiz;
 import com.example.administrator.jdbk.dao.ExamDao;
 import com.example.administrator.jdbk.biz.IExamBiz ;
+import com.example.administrator.jdbk.view.QuestionAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -45,11 +46,12 @@ public class ExamActivity extends AppCompatActivity {
     IExamBiz biz;
     LinearLayout LayoutLoading,Layout03,Layout04;
     ProgressBar dialog;
-
+    Gallery mGallery;
     boolean isLoadExamInfo=false ;
     boolean isLoadQuestion=false ;
     boolean isLoadExamInfoReceiver=false ;
     boolean isLoadQuestionReceiver=false ;
+    QuestionAdapter mAdapter;
 
     LoadExamBroadcast loadExamBroadcast;
     LoadQuestionBroadcast loadQuestionBroadcast ;
@@ -105,7 +107,7 @@ public class ExamActivity extends AppCompatActivity {
         tvop4 =(TextView) findViewById(R.id.tv_exam_op4);
         tvTime  =(TextView) findViewById(R.id.tv_time);
         Image =(ImageView) findViewById(R.id.Iv_exam_image);
-
+        mGallery =(Gallery)  findViewById(R.id.gallery) ;
         cb1=(CheckBox)  findViewById(R.id.cb_01);
         cb2=(CheckBox)  findViewById(R.id.cb_02);
         cb3=(CheckBox)  findViewById(R.id.cb_03);
@@ -176,6 +178,7 @@ public class ExamActivity extends AppCompatActivity {
                         showData(examinfo);
                         InitTimer(examinfo);
                     }
+                    initGallery();
                     List<Exam> list = Examapplication.getInstance().getmQuestion();
                     Log.e("list","list = "+list);
                     if (list != null) {
@@ -191,6 +194,12 @@ public class ExamActivity extends AppCompatActivity {
         }
 
     }
+
+    private void initGallery() {
+            mAdapter =new QuestionAdapter(this) ;
+            mGallery.setAdapter(mAdapter) ;
+    }
+
     //加载剩余考试时间
     private void InitTimer(ExamInfo examinfo) {
         int  sumTime=examinfo.getLimitTime()*60*1000;
@@ -206,7 +215,7 @@ public class ExamActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                            tvTime .setText("剩余时间"+min+""+sec+"秒") ;
+                            tvTime .setText("剩余时间"+min+"分"+sec+"秒") ;
                         }
                     });
             }
