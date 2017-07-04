@@ -11,6 +11,6 @@ public interface IExamBiz {
     Exam getExam();
     Exam NextQuestion();
     Exam PreQuestion();
-    void CommitExam();
+    int CommitExam();
     String getIndex();
 }

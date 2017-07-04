@@ -2,10 +2,12 @@ package com.example.administrator.jdbk.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.ListMenuItemView;
 import android.util.Log;
@@ -240,6 +242,27 @@ public class ExamActivity extends AppCompatActivity {
     public void nextExam(View view) {
         saveUseranswer() ;
         showExam(biz.NextQuestion()) ;
+    }
+//交卷
+    public void commit(View view) {
+        saveUseranswer() ;
+
+        int s=biz.CommitExam() ;
+        View inflate=View.inflate(this,R.layout.layout_result,null);
+        TextView tvResult=(TextView)  inflate.findViewById(R.id .tv_result);
+        AlertDialog .Builder builder=new AlertDialog.Builder(this) ;
+        builder .setIcon(R.drawable .exam_commit32x32)
+                .setTitle("考试结果")
+                //.setMessage("你的分数为/n"+s+"分")
+                .setView(inflate)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish() ;
+                    }
+                }) ;
+        builder .create() .show();
+
     }
 
 
