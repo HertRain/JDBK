@@ -279,15 +279,26 @@ public class ExamActivity extends AppCompatActivity {
                 int usercb=Integer .parseInt(UserAnswer)-1;
                 Log.e("Integer","cb="+usercb);
                 cbs[usercb].setChecked(true) ;
+                setOptions(false);
+            }else {
+                setOptions(true);
             }
         }
     }
+
+    private void setOptions(boolean b) {
+        for(CheckBox cb:cbs){
+            cb.setEnabled(b) ;
+        }
+    }
+
     //重置选项
     private void resetOptions() {
         for(CheckBox cb:cbs){
             cb.setChecked(false) ;
         }
     }
+
     //保存考生答案
     private void saveUseranswer(){
 
