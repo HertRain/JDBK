@@ -362,6 +362,7 @@ public class ExamActivity extends AppCompatActivity {
     }
 //交卷
     public void commit(View view) {
+
         saveUseranswer() ;
         int s=biz.CommitExam() ;
         View inflate=View.inflate(this,R.layout.layout_result,null);
@@ -372,13 +373,15 @@ public class ExamActivity extends AppCompatActivity {
                 .setTitle("考试结果")
                 //.setMessage("你的分数为/n"+s+"分")
                 .setView(inflate)
+                .setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         finish() ;
                     }
                 }) ;
-        builder .create() .show();
+        builder .create();
+        builder .show() ;
     }
 
 
