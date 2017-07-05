@@ -41,6 +41,7 @@ import java.util.TimerTask;
 
 public class ExamActivity extends AppCompatActivity {
     TextView textView,tvExamTitle,tvop1,tvop2,tvop3,tvop4,tvload,tvExamNo,tvTime;
+    TextView[] tvops=new TextView[4] ;
     CheckBox cb1,cb2,cb3,cb4;
     CheckBox[] cbs=new CheckBox[4];
     ImageView Image;
@@ -117,6 +118,8 @@ public class ExamActivity extends AppCompatActivity {
         cbs[1]=cb2;
         cbs[2]=cb3;
         cbs[3]=cb4;
+        tvops[0] =tvop1 ;
+        tvops[1] =tvop2 ;tvops[2] =tvop3 ;tvops[3] =tvop4 ;
 
         LayoutLoading =(LinearLayout) findViewById(R.id.Layout_loading);
         Layout03 =(LinearLayout) findViewById(R.id.Layout_03);
@@ -280,12 +283,40 @@ public class ExamActivity extends AppCompatActivity {
                 Log.e("Integer","cb="+usercb);
                 cbs[usercb].setChecked(true) ;
                 setOptions(false);
+                setTextColor(UserAnswer,exam .getAnswer());
             }else {
                 setOptions(true);
+                setOpColor() ;
             }
         }
     }
+//重置颜色
+    private void setOpColor() {
+        for(TextView  op:tvops ){
+            op.setTextColor(getResources() .getColor(R.color .black));
+        }
+    }
 
+    //设置options的颜色
+    private void setTextColor(String userAnswer, String answer) {
+            int ua=Integer .parseInt(userAnswer)-1;
+            int ra=Integer .parseInt(answer)-1;
+            for(int i=0;i<tvops.length ;i++ ){
+                if(i==ra){
+                    tvops[i].setTextColor(getResources() .getColor(R.color .green)) ;
+                } else {
+                    if(!userAnswer .equals(answer)){
+                        if(i==ua){
+                        tvops [i].setTextColor(getResources() .getColor(R.color .red));
+                        } else {
+                        tvops [i].setTextColor(getResources() .getColor(R.color .black));
+                        }
+                    }
+                }
+            }
+    }
+
+    //设置CheckBox是否可选
     private void setOptions(boolean b) {
         for(CheckBox cb:cbs){
             cb.setEnabled(b) ;
