@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.ListMenuItemView;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Gallery;
@@ -198,7 +199,17 @@ public class ExamActivity extends AppCompatActivity {
     private void initGallery() {
             mAdapter =new QuestionAdapter(this) ;
             mGallery.setAdapter(mAdapter) ;
+            mGallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                                @Override
+                                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                                    Log.e("Gallery", "Gallery Item position+" + position);
+                                                    //biz.getExam(position) ;
+                                                    saveUseranswer();
+                                                    showExam(biz.getExam(position));
+                                                }
+                                            });
     }
+
 
     //加载剩余考试时间
     private void InitTimer(ExamInfo examinfo) {
@@ -285,10 +296,12 @@ public class ExamActivity extends AppCompatActivity {
             if(cbs[i].isChecked()){
                 Log.e("Integer", "cb=" + String.valueOf(i + 1));
                 biz.getExam().setUseranswer(String.valueOf(i + 1));
+                mAdapter .notifyDataSetChanged() ;
                 return ;
             }
         }
-
+        biz.getExam() .setUseranswer("") ;
+        mAdapter .notifyDataSetChanged() ;
     }
 
     private void showData(ExamInfo examinfo) {
