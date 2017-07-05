@@ -49,10 +49,15 @@ public class QuestionAdapter extends BaseAdapter {
         String ua=examList.get(position).getUseranswer() ;
         if(examList.get(position).getUseranswer()!=null &&!ua.equals(""))
         {
+            if(examList.get(position).getUseranswer().equals(examList.get(position).getAnswer())  ){
             ivQuestion .setImageResource(R.drawable .answer24x24);
+            }
+            else {
+                ivQuestion .setImageResource(R.drawable.error) ;
+            }
         }
         else {
-            ivQuestion .setImageResource(R.drawable .ques24x24) ;
+            ivQuestion .setImageResource(R.drawable.question) ;
         }
         tvNo .setText("第"+(position+1)+"题") ;
         return view;
