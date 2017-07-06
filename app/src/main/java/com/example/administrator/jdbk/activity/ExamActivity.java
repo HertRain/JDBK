@@ -40,7 +40,7 @@ import java.util.TimerTask;
  */
 
 public class ExamActivity extends AppCompatActivity {
-    TextView textView,tvExamTitle,tvop1,tvop2,tvop3,tvop4,tvload,tvExamNo,tvTime;
+    TextView textView,tvExamTitle,tvop1,tvop2,tvop3,tvop4,tvload,tvExamNo,tvTime,tvExplain;
     TextView[] tvops=new TextView[4] ;
     CheckBox cb1,cb2,cb3,cb4;
     CheckBox[] cbs=new CheckBox[4];
@@ -108,6 +108,7 @@ public class ExamActivity extends AppCompatActivity {
         tvop3 =(TextView) findViewById(R.id.tv_exam_op3);
         tvop4 =(TextView) findViewById(R.id.tv_exam_op4);
         tvTime  =(TextView) findViewById(R.id.tv_time);
+        tvExplain  =(TextView) findViewById(R.id.Explain);
         Image =(ImageView) findViewById(R.id.Iv_exam_image);
         mGallery =(Gallery)  findViewById(R.id.gallery) ;
         cb1=(CheckBox)  findViewById(R.id.cb_01);
@@ -209,6 +210,7 @@ public class ExamActivity extends AppCompatActivity {
                                                     //biz.getExam(position) ;
                                                     saveUseranswer();
                                                     showExam(biz.getExam(position));
+
                                                 }
                                             });
     }
@@ -283,14 +285,21 @@ public class ExamActivity extends AppCompatActivity {
                 Log.e("Integer","cb="+usercb);
                 cbs[usercb].setChecked(true) ;
                 setOptions(false);
+                showExplain() ;
                 setTextColor(UserAnswer,exam .getAnswer());
             }else {
                 setOptions(true);
                 setOpColor() ;
+                notshowExplain() ;
             }
         }
     }
-//重置颜色
+
+    private void notshowExplain() {
+        tvExplain .setVisibility(textView.INVISIBLE);
+    }
+
+    //重置颜色
     private void setOpColor() {
         for(TextView  op:tvops ){
             op.setTextColor(getResources() .getColor(R.color .black));
@@ -338,6 +347,7 @@ public class ExamActivity extends AppCompatActivity {
             if(cbs[i].isChecked()){
                 Log.e("Integer", "cb=" + String.valueOf(i + 1));
                 biz.getExam().setUseranswer(String.valueOf(i + 1));
+                setOptions(true) ;
                 mAdapter .notifyDataSetChanged() ;
                 return ;
             }
@@ -345,7 +355,10 @@ public class ExamActivity extends AppCompatActivity {
         biz.getExam() .setUseranswer("") ;
         mAdapter .notifyDataSetChanged() ;
     }
-
+    private void showExplain(){
+        tvExplain .setText(biz.getExam() .getExplains());
+        tvExplain .setVisibility(textView.VISIBLE);
+    }
     private void showData(ExamInfo examinfo) {
         textView .setText(examinfo .toString()) ;
     }
@@ -360,9 +373,22 @@ public class ExamActivity extends AppCompatActivity {
         saveUseranswer() ;
         showExam(biz.NextQuestion()) ;
     }
-//交卷
     public void commit(View view) {
-
+        AlertDialog .Builder builder=new AlertDialog.Builder(this) ;
+        builder.setTitle("交卷")
+                .setMessage("确认交卷吗")
+                .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        commit();
+                    }
+                })
+                .setNegativeButton("取消",null);
+        builder .create();
+        builder .show() ;
+    }
+//交卷
+    public void commit() {
         saveUseranswer() ;
         int s=biz.CommitExam() ;
         View inflate=View.inflate(this,R.layout.layout_result,null);
