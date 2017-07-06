@@ -296,7 +296,7 @@ public class ExamActivity extends AppCompatActivity {
     }
 
     private void notshowExplain() {
-        tvExplain .setVisibility(textView.INVISIBLE);
+        tvExplain .setVisibility(textView.GONE);
     }
 
     //重置颜色
